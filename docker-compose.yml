@@ -1,0 +1,16 @@
+services:
+  web-server:
+    build:
+      context: ../todo-front
+      dockerfile: Dockerfile
+    ports:
+      - '80:80'
+    depends_on:
+      - backend
+  backend:
+    build:
+      context: ../todo-app-backend
+      dockerfile: Dockerfile
+    ports:
+      - '8080:8080'
+
