@@ -1,4 +1,8 @@
 services:
+  redis-todo-server:
+    image: redis:latest
+    ports:
+      - "6379:6379"
   todo-db:
     image: mysql:latest # MySQLの最新イメージを使用
     environment:
