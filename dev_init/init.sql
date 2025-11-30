@@ -4,11 +4,25 @@ SET CHARACTER SET 'utf8mb4';
 SET SESSION collation_connection = 'utf8mb4_general_ci';
 
 -- テーブルの作成
+CREATE TABLE IF NOT EXISTS user_info ( -- テーブル名をバッククォートで囲む
+    accountId VARCHAR(255) NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY(accountId)
+);
+
+
 CREATE TABLE IF NOT EXISTS todo(
     id INT PRIMARY KEY AUTO_INCREMENT,
     text VARCHAR(256) NOT NULL,
-    is_completed BOOLEAN NOT NULL DEFAULT FALSE
+    is_completed BOOLEAN NOT NULL DEFAULT FALSE,
+    accountId VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY(accountId) REFERENCES user_info(accountId) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 -- 初期データの作成
-INSERT INTO todo (text) VALUES('初期データ');
+INSERT INTO user_info (accountId,password) VALUES('user','password');
+INSERT INTO todo (text,accountId) VALUES('初期データ','user');
